@@ -1,0 +1,39 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider     = "mysql"
+    url          = env("DATABASE_URL")
+    relationMode = "prisma"
+}
+
+model Team {
+    id             Int          @id @default(autoincrement())
+    leaderName     String
+    code           String       @unique
+    name           String?
+    TotalTimeTaken Int          @default(0)
+    TeamRiddle     TeamRiddle[]
+}
+
+model Riddle {
+    id         Int          @id @default(autoincrement())
+    question   String       @db.VarChar(2000)
+    answer     String
+    createdAt  DateTime     @default(now())
+    TeamRiddle TeamRiddle[]
+}
+
+model TeamRiddle {
+    id        Int      @id @default(autoincrement())
+    teamId    Int
+    riddleId  Int
+    solved    Boolean  @default(false)
+    createdAt DateTime @default(now())
+    team      Team     @relation(fields: [teamId], references: [id])
+    riddle    Riddle   @relation(fields: [riddleId], references: [id])
+
+    @@index([teamId])
+    @@index([riddleId])
+}

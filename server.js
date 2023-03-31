@@ -41,7 +41,7 @@ app.post("/register",async(req,res)=>{
                 for (var i=0;i<qrGroup.length;i++){
                     path.push(Math.floor(Math.random() * i))
                 }
-                console.log(path);
+                // console.log(path);
                     // path= [Math.floor(Math.random() * qrGroup1.length), Math.floor(Math.random() * qrGroup2.length) , Math.floor(Math.random() * qrGroup3.length) , Math.floor(Math.random() * qrGroup4.length) , Math.floor(Math.random() * qrGroup5.length)]
                 await Team.findByIdAndUpdate(a._id , {path:path},{ new: true })
                 res.send(path)           
@@ -61,20 +61,20 @@ app.post("/scan/:id",async(req,res)=>{
     const email = req.body.email;
     const teamData = await Team.findOne({email : email})
     const qrCodeValue = req.params.id
-    console.log(qrCodeValue);
+    // console.log(qrCodeValue);
 
     // we need divide for mongodb work
     let x = Math.floor(qrCodeValue/4)
     let y = Object.values(teamData.path)[x]
-    console.log(x);
-    console.log(Object.values(teamData.path)[x])
+    // console.log(x);
+    // console.log(Object.values(teamData.path)[x])
 
     // we will need % to check for values
     let b = qrCodeValue%4; // will be suitable for array indexing
     let z = qrGroup[x]
-    console.log(Object.values(z)[b]) //13
+    // console.log(Object.values(z)[b]) //13
     let w = Math.floor(Object.values(z)[b]%4)
-    console.log(w);
+    // console.log(w);
     if(y===w)
         res.send("ok")
     else 
