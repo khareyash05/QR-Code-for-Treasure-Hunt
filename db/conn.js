@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const DB = process.env.DB
 
-mongoose.connect("mongodb+srv://yash:05112001@cluster0.73ns4.mongodb.net/test?retryWrites=true&w=majority",{
+mongoose.connect(process.env.DB,{
     useNewUrlParser : true
 }).then(()=>{
     console.log("Connected to database");
